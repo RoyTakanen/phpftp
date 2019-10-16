@@ -44,9 +44,9 @@ if ($_SESSION["currentdirectory" === ""]) {
 <div class="container">
 <?php
     if ($_POST["username"] != "") {
-      $ftp_server = $_POST["server"];
-      $ftp_username = $_POST["username"];
-      $ftp_userpass = $_POST["password"];
+      $ftp_server = htmlentities($_POST["server"]);
+      $ftp_username = htmlentities($_POST["username"]);
+      $ftp_userpass = htmlentities($_POST["password"]);
       //echo $ftp_username."1";
     }
 
@@ -57,8 +57,8 @@ if ($_SESSION["currentdirectory" === ""]) {
       //echo $ftp_username."2";
     }
 
-    $_SESSION["server"] = htmlentities($ftp_server);
-    $_SESSION["username"] =htmlentities($ftp_username);
+    $_SESSION["server"] = $ftp_server;
+    $_SESSION["username"] = $ftp_username;
     $_SESSION["userpass"] = $ftp_userpass;
     //echo $ftp_username."4";
 
