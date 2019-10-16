@@ -26,7 +26,7 @@ if ($_SESSION["currentdirectory" === ""]) {
       <a class="nav-link" href="https://kaikkitietokoneista.net">Kaikkitietokoneista.net</a>
     </li>
     <li class="nav-item">
-      <form action="ftp.php" method="POST">
+      <form method="POST">
 	<input type="text" name="server" placeholder="ftpserver.com" required>
 	<input type="text" name="username" placeholder="Username" required>
 	<input type="password" name="password" placeholder="Password" required>
@@ -58,7 +58,7 @@ if ($_SESSION["currentdirectory" === ""]) {
     }
 
     $_SESSION["server"] = htmlentities($ftp_server);
-    $_SESSION["username"] = $ftp_username;
+    $_SESSION["username"] =htmlentities($ftp_username);
     $_SESSION["userpass"] = $ftp_userpass;
     //echo $ftp_username."4";
 
@@ -66,9 +66,9 @@ if ($_SESSION["currentdirectory" === ""]) {
     $ftp_conn = ftp_connect($ftp_server) or die("Could not connect to $ftp_server $ftp_username $ftp_userpass");
     $login = ftp_login($ftp_conn, $ftp_username, $ftp_userpass);
     echo "Connected to: $ftp_server<br>Logged in as: ".$ftp_username . "<hr>"; //. "<br><hr>Current dir: ". ftp_pwd($ftp_conn);
-    echo "<br><form action=\"ftp.php\" method='GET'><input type='hidden' name='data' value='create'><input type='text' name='targetfile' value='New_file.html'><input type=\"submit\" value=\"Create\"></form>";
-    echo "<br><form action=\"ftp.php\" method='GET'><input type='hidden' name='data' value='makedir'><input type='text' name='targetdir' value='New_directory'><input type=\"submit\" value=\"Make dir\"></form>";
-    echo "<br><form action=\"ftp.php\" method='GET'><input type='hidden' name='data' value='upload'><input type='file' name='targetfile'><input type=\"submit\" value=\"Upload\"></form>";
+    echo "<br><form method='GET'><input type='hidden' name='data' value='create'><input type='text' name='targetfile' value='New_file.html'><input type=\"submit\" value=\"Create\"></form>";
+    echo "<br><form method='GET'><input type='hidden' name='data' value='makedir'><input type='text' name='targetdir' value='New_directory'><input type=\"submit\" value=\"Make dir\"></form>";
+    echo "<br><form method='GET'><input type='hidden' name='data' value='upload'><input type='file' name='targetfile'><input type=\"submit\" value=\"Upload\"></form>";
     //Sets default dir
     if ($_SESSION["currendirectory"] != ".") {
       $defaultdir = $_SESSION["currendirectory"];
@@ -96,12 +96,12 @@ if ($_SESSION["currentdirectory" === ""]) {
               </tr>
             </thead>
           <tbody>";
-    echo "<td></td><td><form action=\"ftp.php\" method='GET'><input type='hidden' name='data' value='changedir'><input type='hidden' name='targetdir' value='..'><input type=\"submit\" value=\"..\"></form></td><td></td><td></td><td></td>";
+    echo "<td></td><td><form method='GET'><input type='hidden' name='data' value='changedir'><input type='hidden' name='targetdir' value='..'><input type=\"submit\" value=\"..\"></form></td><td></td><td></td><td></td>";
     foreach($file_list as $x => $x_value) {
       echo "<tr>";
       //Estaa . ja .. hakemistojen poistamisen
-      echo "<td>" . $x . "</td><td><form action=\"ftp.php\" method='GET'><input type='hidden' name='data' value='changedir'><input type='hidden' name='targetdir' value='" . $x_value . "'><input type=\"submit\" value=\"" . $x_value . "\"\"></form></td><td><a href=\"ftp.php?data=remove&targetfile=".$x_value."\">Delete</a></td>
-      <td><form action=\"ftp.php\" method='GET'><input type='hidden' name='data' value='rename'><input type='hidden' name='targetfile' value='".$x_value."'><input type='text' name='renamedfile'><input type=\"submit\" value=\"Rename\"></form></td><td><a href='".$x_value."' download>".$x_value."</a></td>";
+      echo "<td>" . $x . "</td><td><form method='GET'><input type='hidden' name='data' value='changedir'><input type='hidden' name='targetdir' value='" . $x_value . "'><input type=\"submit\" value=\"" . $x_value . "\"\"></form></td><td><a href=\"ftp.php?data=remove&targetfile=".$x_value."\">Delete</a></td>
+      <td><form method='GET'><input type='hidden' name='data' value='rename'><input type='hidden' name='targetfile' value='".$x_value."'><input type='text' name='renamedfile'><input type=\"submit\" value=\"Rename\"></form></td><td><a href='".$x_value."' download>".$x_value."</a></td>";
 	     echo "</tr>";
     }
     echo "</tbody></table>";
