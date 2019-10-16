@@ -100,7 +100,7 @@ if ($_SESSION["currentdirectory" === ""]) {
     foreach($file_list as $x => $x_value) {
       echo "<tr>";
       //Estaa . ja .. hakemistojen poistamisen
-      echo "<td>" . $x . "</td><td><form method='GET'><input type='hidden' name='data' value='changedir'><input type='hidden' name='targetdir' value='" . $x_value . "'><input type=\"submit\" value=\"" . $x_value . "\"\"></form></td><td><a href=\"ftp.php?data=remove&targetfile=".$x_value."\">Delete</a></td>
+      echo "<td>" . $x . "</td><td><form method='GET'><input type='hidden' name='data' value='changedir'><input type='hidden' name='targetdir' value='" . $x_value . "'><input type=\"submit\" value=\"" . $x_value . "\"\"></form></td><td><a href=\"data=remove&targetfile=".$x_value."\">Delete</a></td>
       <td><form method='GET'><input type='hidden' name='data' value='rename'><input type='hidden' name='targetfile' value='".$x_value."'><input type='text' name='renamedfile'><input type=\"submit\" value=\"Rename\"></form></td><td><a href='".$x_value."' download>".$x_value."</a></td>";
 	     echo "</tr>";
     }
