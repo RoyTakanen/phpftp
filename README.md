@@ -1,2 +1,7 @@
 # phpftp
-FTP client made with PHP by http://kaikkitietokoneista.net
+
+Web based FTP client.
+
+## Testing
+
+I use [DLP Test](https://dlptest.com/ftp-test/) to test the program. 
