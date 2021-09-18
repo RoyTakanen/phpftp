@@ -16,13 +16,13 @@
         $ftp = $_SESSION["user"];
 
         $response["error"] = FALSE;
-        $response["message"] = "Listing files in the current directory.";
+        $response["message"] = "Listed files in the current directory.";
         $response["loggedin"] = TRUE;
 
         if (!empty($_GET["dir"])) {
             $dir = $_GET["dir"];
             // Consider telling the dir that we are looking.
-            $response["message"] = "Listing files in the specified directory.";
+            $response["message"] = "Listed files in the specified directory.";
         } else {
             $dir = ".";
         }
