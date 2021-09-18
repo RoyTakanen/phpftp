@@ -12,7 +12,17 @@
 </head>
 <body>
   <div id="loggedIn" style="display: none">
-    <a href="/logout.php" class="waves-effect waves-light btn">Log out</a>
+    <div class="navbar-fixed">
+      <nav>
+        <div class="nav-wrapper">
+          <a href="#!" class="brand-logo">phpftp</a>
+          <ul class="right hide-on-med-and-down">
+            <li><button id="logoutBtn" class="waves-effect waves-light btn">Log out</button></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
   </div>
   <div id="notLoggedIn">
 
@@ -53,6 +63,41 @@
 
     // TODO: some cool thing (like preloader) that show progress when actions are performed
 
+    const logout = () => {
+      fetch('/api/logout.php').then((response) => {
+        return response.json();
+      }).then((data) => {
+        loggedIn = data.loggedIn;
+
+        M.toast({html: data.message});
+        
+        if (loggedIn) {
+          document.getElementById('loggedIn').style.display = "block";
+          document.getElementById('notLoggedIn').style.display = "none";
+  
+          console.log("User is logged in");
+
+          watchAfterLogin();
+        } else {
+          document.getElementById('loggedIn').style.display = "none";
+          document.getElementById('notLoggedIn').style.display = "block";
+  
+          console.log("User is not logged in");
+
+          watchLogin();
+        }
+  
+      }).catch((error) => {
+        console.trace("An error happened", error);
+      });
+    }
+
+    const watchAfterLogin = () => {
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        logout();
+      })
+    }
+
     const tryLogin = (host, port, pass, user) => {
       let payload = {
         host: host,
@@ -83,6 +128,8 @@
           document.getElementById('notLoggedIn').style.display = "none";
   
           console.log("User is logged in");
+
+          watchAfterLogin();
         } else {
           document.getElementById('loggedIn').style.display = "none";
           document.getElementById('notLoggedIn').style.display = "block";
@@ -119,6 +166,8 @@
   
           console.log("User is logged in");
           M.toast({html: 'You are logged in!'});
+
+          watchAfterLogin();
         } else {
           document.getElementById('loggedIn').style.display = "none";
           document.getElementById('notLoggedIn').style.display = "block";
