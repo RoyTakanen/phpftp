@@ -1,4 +1,5 @@
 <?php
+    // TODO: Write a proper API documentation!
     die("The api works");
 ?>
 
