@@ -9,6 +9,9 @@
 
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <!-- Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
   <div id="loggedIn" style="display: none">
@@ -24,6 +27,9 @@
     </div>
 
     <div class="container">
+      <br>
+      <button id="refreshFilesButton" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">refresh</i></button>
+      <br>
       <table class="highlight">
         <thead>
           <tr>
@@ -118,6 +124,8 @@
         data.files.forEach(file => {
           addFile(file, table)
         });
+
+        M.toast({html: "Listed files!"});
       }).catch((error) => {
         console.trace("An error happened", error);
       });
@@ -155,6 +163,10 @@
     const watchAfterLogin = () => {
       document.getElementById('logoutBtn').addEventListener('click', () => {
         logout();
+      })
+
+      document.getElementById('refreshFilesButton').addEventListener('click', () => {
+        listFiles();
       })
 
       listFiles();
