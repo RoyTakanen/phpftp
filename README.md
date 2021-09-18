@@ -22,6 +22,7 @@ I use [DLP Test](https://dlptest.com/ftp-test/) to test the program.
 - [ ] preview files
 - [ ] change permissions
 - [ ] view permissions
+- [ ] keyboard shortcuts
 
 **Other**
 
