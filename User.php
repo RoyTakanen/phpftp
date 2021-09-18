@@ -99,4 +99,8 @@
                 return FALSE;
             }
         }
+
+        public function current_dir() {
+            return $this->dir;
+        }
     }

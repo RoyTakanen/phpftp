@@ -21,11 +21,19 @@
         if (!empty($_GET["dir"])) {
             $dir = $_GET["dir"];
             // Consider telling the dir that we are looking.
-            $response["message"] = "Directory does not exist.";    
+            $response["message"] = "Directory does not exist. Taking you to root dir.";    
+
+            if ($dir === "..") {
+                $current_dir = $ftp->current_dir();
+
+                $dir = dirname($current_dir);
+            }
 
             if ($ftp->change_dir($dir)) {
                 $response["error"] = FALSE;
                 $response["message"] = "Changed directory.";    
+            } else {
+                $ftp->change_dir("/");
             }
         }
     }

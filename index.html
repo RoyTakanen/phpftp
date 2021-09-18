@@ -107,6 +107,7 @@
       if (file.type === "folder") {
         newRow.style.cursor = "pointer";
         newRow.addEventListener('click', () => {
+          M.toast({html: "Changing directory..."});
           changeDirectory(file.name);
         })
       }
@@ -143,6 +144,7 @@
         
         clearTable(table)
 
+        addFile({name: "..", type: "folder"}, table)
         data.files.forEach(file => {
           addFile(file, table)
         });
