@@ -20,6 +20,8 @@ I use [DLP Test](https://dlptest.com/ftp-test/) to test the program.
 - [ ] edit text files
 - [ ] download files
 - [ ] preview files
+- [ ] change permissions
+- [ ] view permissions
 
 **Other**
 
