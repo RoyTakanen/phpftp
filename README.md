@@ -12,7 +12,7 @@ I use [DLP Test](https://dlptest.com/ftp-test/) to test the program.
 
 - [x] login
 - [x] logout
-- [ ] list files in current directory
+- [x] list files in current directory
 - [ ] change directory
 - [ ] create directories
 - [ ] upload files
