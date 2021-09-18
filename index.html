@@ -83,12 +83,33 @@
 
     // TODO: some cool thing (like preloader) that show progress when actions are performed
 
+    const changeDirectory = (dir) => {
+      fetch('/api/ftp/changedir.php?dir=' + dir).then((response) => {
+        return response.json();
+      }).then((data) => {
+        loggedIn = data.loggedIn;
+
+        M.toast({html: data.message});
+        
+        listFiles()
+      }).catch((error) => {
+        console.trace("An error happened", error);
+      });
+    }
+
     const clearTable = (table) => {
         table.innerHTML = "";
     }
 
     const addFile = (file, table) => {
       let newRow = table.insertRow(-1);
+
+      if (file.type === "folder") {
+        newRow.style.cursor = "pointer";
+        newRow.addEventListener('click', () => {
+          changeDirectory(file.name);
+        })
+      }
 
       let nameCell = newRow.insertCell(0);
 
