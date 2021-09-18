@@ -4,7 +4,15 @@ Web based FTP client.
 
 ## Testing
 
-I use [DLP Test](https://dlptest.com/ftp-test/) to test the program. 
+Clone this repository: `git clone https://github.com/kaikkitietokoneista/phpftp.git`
+
+Go into it: `cd phpftp`
+
+Start a development server: `php -S localhost:8080`
+
+Go in the web browser to [localhost:8080](http://localhost:8080)
+
+I use [DLP Test](https://dlptest.com/ftp-test/) FTP credentials to test the program. 
 
 ## Features 
 
@@ -22,8 +30,8 @@ I use [DLP Test](https://dlptest.com/ftp-test/) to test the program.
 - [ ] preview files
 - [ ] change permissions
 - [ ] view permissions
-- [ ] keyboard shortcuts
 
 **Other**
 
 - [ ] automatically check if API host runs PHP (the JS only needs to be created)
+- [ ] keyboard shortcuts
