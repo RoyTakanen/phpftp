@@ -21,7 +21,7 @@ I use [DLP Test](https://dlptest.com/ftp-test/) FTP credentials to test the prog
 - [x] login
 - [x] logout
 - [x] list files in current directory
-- [ ] change directory
+- [x] change directory
 - [ ] create directories
 - [ ] upload files
 - [ ] delete files
