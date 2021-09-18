@@ -5,6 +5,8 @@
         private $host;
         private $port;
 
+        private $dir = ".";
+
         function __construct($user, $pass, $host, $port=21) {
             $this->user = $user;
             $this->pass = $pass;
@@ -26,21 +28,22 @@
             }
 
             if (@ftp_login($conn_id, $this->user, $this->pass)) {
+                $this->dir = ftp_pwd($conn_id);
                 return TRUE;
             }
 
             return FALSE;
         }
 
-        public function list_files($dir=".") {
-            
+        public function list_files() {
+
             $conn_id = ftp_connect($this->host, $this->port);
             ftp_login($conn_id, $this->user, $this->pass);
 
             // TODO: escape the folder name (for example spaces might be parsed as arguments in the command)
 
             // The -F argument adds suffic / to folders and @ to symlinks. No suffix means it is regular file.
-            $files = ftp_nlist($conn_id, "-F " . $dir);
+            $files = ftp_nlist($conn_id, "-F " . $this->dir);
 
             $data = array();
 
@@ -82,5 +85,18 @@
             }
 
             return $data;
+        }
+
+        public function change_dir($dir) {
+            $conn_id = ftp_connect($this->host, $this->port);
+            ftp_login($conn_id, $this->user, $this->pass);
+
+            $this->dir = $dir;
+
+            if (ftp_chdir($conn_id, $this->dir)) {
+                return TRUE;
+            } else { 
+                return FALSE;
+            }
         }
     }

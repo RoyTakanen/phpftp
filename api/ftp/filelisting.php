@@ -19,15 +19,7 @@
         $response["message"] = "Listed files in the current directory.";
         $response["loggedin"] = TRUE;
 
-        if (!empty($_GET["dir"])) {
-            $dir = $_GET["dir"];
-            // Consider telling the dir that we are looking.
-            $response["message"] = "Listed files in the specified directory.";
-        } else {
-            $dir = ".";
-        }
-
-        $response["files"] = $ftp->list_files($dir);
+        $response["files"] = $ftp->list_files();
     }
 
     echo json_encode($response);
