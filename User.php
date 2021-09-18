@@ -5,7 +5,7 @@
         private $host;
         private $port;
 
-        private $ftp_conn;
+        private $conn_id;
 
         function __construct($user, $pass, $host, $port=21) {
             $this->user = $user;
@@ -19,13 +19,22 @@
                 return FALSE;
             }
 
-            $this->ftp_conn = ftp_connect($this->host, $this->port);
+            $this->conn_id = ftp_connect($this->host, $this->port);
 
-            if ($this->ftp_conn === FALSE) {
+            if ($this->conn_id === FALSE) {
                 return FALSE;
             }
 
-            ftp_login($this->ftp_conn, $this->user, $this->pass);
-            return TRUE;
+            if (@ftp_login($this->conn_id, $this->user, $this->pass)) {
+                return TRUE;
+            }
+
+            ftp_set_option($this->conn_id, FTP_TIMEOUT_SEC, 1800); // timeout 30 mins
+
+            return FALSE;
+        }
+
+        public function list_files($dir=".") {
+            return ftp_nlist($this->conn_id, $dir);
         }
     }
