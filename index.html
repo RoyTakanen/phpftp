@@ -23,6 +23,20 @@
       </nav>
     </div>
 
+    <div class="container">
+      <table class="highlight">
+        <thead>
+          <tr>
+              <th>Name</th>
+              <th>Type</th>
+          </tr>
+        </thead>
+  
+        <tbody id="filesTable"></tbody>
+
+      </table>  
+    </div>
+
   </div>
   <div id="notLoggedIn">
 
@@ -63,6 +77,52 @@
 
     // TODO: some cool thing (like preloader) that show progress when actions are performed
 
+    const clearTable = (table) => {
+        table.innerHTML = "";
+    }
+
+    const addFile = (file, table) => {
+      let newRow = table.insertRow(-1);
+
+      let nameCell = newRow.insertCell(0);
+
+      let nameText = document.createTextNode(file.name);
+      nameCell.appendChild(nameText)
+
+      let typeCell = newRow.insertCell(1);
+
+      let typeText = document.createTextNode(file.type);
+      typeCell.appendChild(typeText)
+    }
+
+    const listFiles = () => {
+      M.toast({html: "Listing files..."});
+
+      fetch('/api/ftp/filelisting.php').then((response) => {
+        return response.json();
+      }).then((data) => {
+        loggedIn = data.loggedIn;
+  
+        if (data.error) {
+          M.toast({html: "Error: " + data.message});
+          console.error(data.message)
+        }
+
+        console.log("Files:")
+        console.table(data.files)
+        
+        let table = document.getElementById('filesTable');
+        
+        clearTable(table)
+
+        data.files.forEach(file => {
+          addFile(file, table)
+        });
+      }).catch((error) => {
+        console.trace("An error happened", error);
+      });
+    }
+
     const logout = () => {
       fetch('/api/logout.php').then((response) => {
         return response.json();
@@ -96,6 +156,8 @@
       document.getElementById('logoutBtn').addEventListener('click', () => {
         logout();
       })
+
+      listFiles();
     }
 
     const tryLogin = (host, port, pass, user) => {
