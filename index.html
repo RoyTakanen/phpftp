@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>phpftp - Online ftp</title>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+<body>
+  <div id="loggedIn" style="display: none">
+    <a href="/logout.php" class="waves-effect waves-light btn">Log out</a>
+  </div>
+  <div id="notLoggedIn">
+
+    <div class="container">
+      <div class="row card-panel teal lighten-5">
+        <form class="col s12" id="loginForm">
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="host" type="text" class="validate">
+              <label for="host">Server hostname</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="port" type="text" class="validate" value="21">
+              <label for="port">Port</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="user" type="text" class="validate">
+              <label for="user">Username</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="pass" type="password" class="validate">
+              <label for="pass">Password</label>
+            </div>
+          </div>
+          
+          <button class="waves-effect waves-light btn">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let loggedIn = false;
+
+    // TODO: some cool thing (like preloader) that show progress when actions are performed
+
+    const tryLogin = (host, port, pass, user) => {
+      let payload = {
+        host: host,
+        port: port,
+        user: user,
+        pass: pass
+      }
+
+      options = { 
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload) 
+      }
+
+      fetch('/api/login.php', options).then((response) => {
+        return response.json();
+      }).then((data) => {
+        M.toast({html: data.message});
+
+        console.log(data)
+
+        loggedIn = data.loggedin
+        
+        if (loggedIn) {
+          document.getElementById('loggedIn').style.display = "block";
+          document.getElementById('notLoggedIn').style.display = "none";
+  
+          console.log("User is logged in");
+        } else {
+          document.getElementById('loggedIn').style.display = "none";
+          document.getElementById('notLoggedIn').style.display = "block";
+        }
+  
+      }).catch((error) => {
+        console.trace("An error happened", error);
+      });
+    }
+
+    const watchLogin = () => {
+      document.getElementById('loginForm').onsubmit = () => {
+        let host = document.getElementById("host").value;
+        let port = document.getElementById("port").value;
+        let pass = document.getElementById("pass").value;
+        let user = document.getElementById("user").value;
+
+        tryLogin(host, port, pass, user);
+
+        return false; // This cancels the form submission
+      }
+    }
+
+
+    const isLoggedIn = () => {
+      fetch('/api/loggedin.php').then((response) => {
+        return response.json();
+      }).then((data) => {
+        loggedIn = data.loggedIn;
+        
+        if (loggedIn) {
+          document.getElementById('loggedIn').style.display = "block";
+          document.getElementById('notLoggedIn').style.display = "none";
+  
+          console.log("User is logged in");
+          M.toast({html: 'You are logged in!'});
+        } else {
+          document.getElementById('loggedIn').style.display = "none";
+          document.getElementById('notLoggedIn').style.display = "block";
+  
+          console.log("User is not logged in");
+
+          watchLogin();
+        }
+  
+      }).catch((error) => {
+        console.trace("An error happened", error);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      
+      // Run here test to check if API works...
+
+      isLoggedIn();
+
+    });
+  </script>
+</body>
+</html>
