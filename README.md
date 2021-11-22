@@ -4,7 +4,7 @@ Web based FTP client.
 
 ## Testing
 
-Clone this repository: `git clone https://github.com/kaikkitietokoneista/phpftp.git`
+Clone this repository: `git clone https://github.com/RoyTakanen/phpftp.git`
 
 Go into it: `cd phpftp`
 
